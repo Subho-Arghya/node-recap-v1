@@ -2,26 +2,40 @@ const express = require("express")
 
 const app = express() // It is an express application
 
-app.get("/api/:id",  (req, res) => {
-    console.log("Req params: " , req.params['id'])
-    console.log("control is here")
-    res.send(`<h2>The respone id is : ${req.params['id']}</h2>`)
-})
-
-app.post("/api",  (req, res) => {
-    console.log("control is here: Post")
-})
-
-app.put("/api",  (req, res) => {
-    console.log("control is here: Put")
-})
-
-app.delete("/api",  (req, res) => {
-    console.log("control is here: Del")
-})
+const mongoose = require('mongoose');
+//const User = require("./src/models/userSchema");
+const userController = require('./src/controllers/userController')
 
 
+//middleware
+app.use(express.json())
+app.use('/api/user', userController)
 
-app.listen(5000, () => {
+/* app.use((req, res, next) => {
+    console.log("Inside middleware: ", req.headers['content-type'])
+    if (req.headers['content-type'] === "application/json") {
+        next()
+    } else {
+        res.send("Bad Request")
+    }
+}) */
+
+
+
+const db_url = `mongodb+srv://Arghya:PVggeRblpo9SzPmo@sample-cluster.vavnf43.mongodb.net/?retryWrites=true&w=majority`
+
+async function connectDB() {
+    try {
+        await mongoose.connect(db_url)
+        console.log("Connection Secured")
+    } 
+    catch(err) {
+        console.log(err)
+    }
+}
+
+
+app.listen(5000, async () => {
+    await connectDB()
     console.log(`Listening at port 5000`)
 })
