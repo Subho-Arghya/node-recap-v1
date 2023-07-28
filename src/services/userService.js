@@ -20,4 +20,22 @@ const createUser = async (newuser) => {
     
 }
 
-module.exports = {fetchUser, createUser}
+const updateUser = async (_id, data) => {
+    try {
+        let updatedUser = await User.findByIdAndUpdate(_id, data, {new: true})
+        return updatedUser
+    } catch(err) {
+        throw err
+    }
+}
+
+const deleteUser = async (_id) => {
+    try {
+        let deletedUser = await User.findByIdAndDelete(_id)
+        return deletedUser
+    } catch(err) {
+        throw err
+    }
+}
+
+module.exports = {fetchUser, createUser, updateUser, deleteUser}
