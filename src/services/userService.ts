@@ -1,5 +1,8 @@
-const User = require('../models/userSchema')
-const fetchUser = async ( userId) => {
+//import { User } from "src/entities/UserEntity";
+
+import User from '../models/userSchema'
+
+export const fetchUser = async ( userId: Number) => {
     try {
         const fetchedUser = await User.findById(userId)
         return fetchedUser
@@ -9,7 +12,7 @@ const fetchUser = async ( userId) => {
     
 }
 
-const createUser = async (newuser) => {
+export const createUser = async (newuser: any) => {
     try {
         let user = new User(newuser)
         let savedUser = user.save()
@@ -20,7 +23,7 @@ const createUser = async (newuser) => {
     
 }
 
-const updateUser = async (_id, data) => {
+export const updateUser = async (_id: any, data: any) => {
     try {
         let updatedUser = await User.findByIdAndUpdate(_id, data, {new: true})
         return updatedUser
@@ -29,7 +32,7 @@ const updateUser = async (_id, data) => {
     }
 }
 
-const deleteUser = async (_id) => {
+export const deleteUser = async (_id: any) => {
     try {
         let deletedUser = await User.findByIdAndDelete(_id)
         return deletedUser
@@ -38,4 +41,4 @@ const deleteUser = async (_id) => {
     }
 }
 
-module.exports = {fetchUser, createUser, updateUser, deleteUser}
+//module.exports = {fetchUser, createUser, updateUser, deleteUser}
